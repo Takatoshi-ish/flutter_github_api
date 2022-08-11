@@ -92,7 +92,7 @@ class _GithubPageState extends State<GithubPage> {
                                 TextStyle(color: Colors.black, fontSize: 14.0),
                           ),
                           Text(
-                            '${githubRepo[index].starCount}',
+                            '⭐ ${githubRepo[index].starCount}',
                             style:
                                 TextStyle(color: Colors.black, fontSize: 18.0),
                           ),
