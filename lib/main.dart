@@ -25,7 +25,7 @@ class GithubPage extends StatefulWidget {
 
 class _GithubPageState extends State<GithubPage> {
   // 初期値は空のListを与えます。
-  List<GithubRepo> githubRepo = [];
+  List<GithubRepository> githubRepository = [];
 
   // 非同期の関数になったため返り値の型にFutureがつき、さらに async キーワードが追加されました。
   Future<void> fetchRepository(String text) async {
@@ -38,9 +38,12 @@ class _GithubPageState extends State<GithubPage> {
         'per_page': 100,
       },
     );
-    final List items = response.data['items'];
-    debugPrint('items: $items');
-    githubRepo = items.map((e) => GithubRepo.fromMap(e)).toList();
+    final List repositories = response.data['items'];
+    debugPrint('items: $repositories');
+    githubRepository =
+        repositories.map((e) => GithubRepository.fromMap(e)).toList();
+    //スターの数が多い順に並び替える
+    githubRepository.sort((a, b) => -a.starCount.compareTo(b.starCount));
     setState(() {});
   }
 
@@ -66,7 +69,7 @@ class _GithubPageState extends State<GithubPage> {
       ),
       body: Center(
         child: ListView.builder(
-          itemCount: githubRepo.length,
+          itemCount: githubRepository.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
               decoration: const BoxDecoration(
@@ -79,20 +82,25 @@ class _GithubPageState extends State<GithubPage> {
                     children: [
                       CircleAvatar(
                         backgroundImage: NetworkImage(
-                          githubRepo[index].avatarUrl,
+                          githubRepository[index].avatarUrl,
                         ),
                       ),
                       const SizedBox(width: 15),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            githubRepo[index].name,
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 14.0),
+                          SizedBox(
+                            width: 290,
+                            child: Text(
+                              githubRepository[index].name,
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 14.0),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           Text(
-                            '⭐ ${githubRepo[index].starCount}',
+                            '⭐ ${githubRepository[index].starCount}',
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 18.0),
                           ),
@@ -101,7 +109,7 @@ class _GithubPageState extends State<GithubPage> {
                     ],
                   ),
                   onTap: () {
-                    launchUrlString(githubRepo[index].htmlUrl);
+                    launchUrlString(githubRepository[index].htmlUrl);
                   }, // タップ
                   onLongPress: () {
                     print("onLongTap called.");
@@ -116,21 +124,21 @@ class _GithubPageState extends State<GithubPage> {
   }
 }
 
-class GithubRepo {
+class GithubRepository {
   final String name;
   final int starCount;
   final String avatarUrl;
   final String htmlUrl;
 
-  GithubRepo({
+  GithubRepository({
     required this.name,
     required this.starCount,
     required this.avatarUrl,
     required this.htmlUrl,
   });
 
-  factory GithubRepo.fromMap(Map<String, dynamic> map) {
-    return GithubRepo(
+  factory GithubRepository.fromMap(Map<String, dynamic> map) {
+    return GithubRepository(
       name: map['full_name'] ?? '',
       starCount: map['stargazers_count'] ?? 0,
       avatarUrl: map['owner']['avatar_url'] ?? '',
