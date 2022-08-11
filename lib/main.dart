@@ -64,6 +64,8 @@ class _GithubPageState extends State<GithubPage> {
     return Scaffold(
       appBar: AppBar(
         title: TextFormField(
+          /// ここに値が入っていると初回起動時に検索されている内容がわかってよい
+          initialValue: 'Flutter',
           decoration: const InputDecoration(
               fillColor: Colors.white, filled: true, hintText: '検索'),
           onFieldSubmitted: (text) {
