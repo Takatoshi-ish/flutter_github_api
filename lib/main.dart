@@ -110,10 +110,7 @@ class _GithubPageState extends State<GithubPage> {
                   ),
                   onTap: () {
                     launchUrlString(githubRepository[index].htmlUrl);
-                  }, // タップ
-                  onLongPress: () {
-                    print("onLongTap called.");
-                  }, // 長押し
+                  },
                 ),
               ),
             );
