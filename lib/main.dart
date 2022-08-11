@@ -47,6 +47,7 @@ class _GithubPageState extends State<GithubPage> {
     githubRepository =
         repositories.map((e) => GithubRepository.fromMap(e)).toList();
     //スターの数が多い順に並び替える
+    /// クエリの時点で 'sort': 'stars' を指定しているからこれはいらないかも。
     githubRepository.sort((a, b) => -a.starCount.compareTo(b.starCount));
     setState(() {});
   }
