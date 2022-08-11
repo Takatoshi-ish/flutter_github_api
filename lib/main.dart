@@ -38,11 +38,16 @@ class _GithubPageState extends State<GithubPage> {
         'per_page': 100,
       },
     );
+
     final List repositories = response.data['items'];
+
+    /// debugPrint の他にも log という関数もあります。
+    /// 違いはよくわかっていません。
     debugPrint('items: $repositories');
     githubRepository =
         repositories.map((e) => GithubRepository.fromMap(e)).toList();
     //スターの数が多い順に並び替える
+    /// クエリの時点で 'sort': 'stars' を指定しているからこれはいらないかも。
     githubRepository.sort((a, b) => -a.starCount.compareTo(b.starCount));
     setState(() {});
   }
@@ -59,6 +64,8 @@ class _GithubPageState extends State<GithubPage> {
     return Scaffold(
       appBar: AppBar(
         title: TextFormField(
+          /// ここに値が入っていると初回起動時に検索されている内容がわかってよい
+          initialValue: 'Flutter',
           decoration: const InputDecoration(
               fillColor: Colors.white, filled: true, hintText: '検索'),
           onFieldSubmitted: (text) {
@@ -73,8 +80,13 @@ class _GithubPageState extends State<GithubPage> {
           itemBuilder: (BuildContext context, int index) {
             return Container(
               decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(width: 1.0, color: Colors.grey))),
+                border: Border(
+                  bottom: BorderSide(
+                    width: 1.0,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
               child: ListTile(
                 title: GestureDetector(
                   child: Row(
