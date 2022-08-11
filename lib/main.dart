@@ -38,7 +38,11 @@ class _GithubPageState extends State<GithubPage> {
         'per_page': 100,
       },
     );
+
     final List repositories = response.data['items'];
+
+    /// debugPrint の他にも log という関数もあります。
+    /// 違いはよくわかっていません。
     debugPrint('items: $repositories');
     githubRepository =
         repositories.map((e) => GithubRepository.fromMap(e)).toList();
