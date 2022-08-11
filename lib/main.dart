@@ -87,14 +87,14 @@ class _GithubPageState extends State<GithubPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${githubRepo[index].name}',
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 14.0),
+                            githubRepo[index].name,
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 14.0),
                           ),
                           Text(
                             '⭐ ${githubRepo[index].starCount}',
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 18.0),
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 18.0),
                           ),
                         ],
                       ),
