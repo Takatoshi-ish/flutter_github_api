@@ -57,6 +57,7 @@ class _GithubPageState extends State<GithubPage> {
     return Scaffold(
       appBar: AppBar(
         title: TextFormField(
+          initialValue: 'Flutter',
           decoration: const InputDecoration(
               fillColor: Colors.white, filled: true, hintText: '検索'),
           onFieldSubmitted: (text) {
