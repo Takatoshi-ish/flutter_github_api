@@ -72,8 +72,10 @@ class _GithubPageState extends State<GithubPage> {
           itemBuilder: (BuildContext context, int index) {
             return Container(
               decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(width: 1.0, color: Colors.grey))),
+                border: Border(
+                  bottom: BorderSide(width: 1.0, color: Colors.grey),
+                ),
+              ),
               child: ListTile(
                 title: GestureDetector(
                   child: Row(
